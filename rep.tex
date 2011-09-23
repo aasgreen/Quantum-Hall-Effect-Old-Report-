@@ -1,0 +1,549 @@
+\documentclass[12pt]{article}
+\author{Adam A. S. Green}
+\title{Summer NSERC Research Project 2010}
+\usepackage{amssymb, amsmath, float, subfig,caption, hyperref}
+\usepackage{epsfig, graphicx}
+\usepackage{fullpage}
+\usepackage{verbatim}
+\usepackage{setspace}
+\begin{document}
+\bibliographystyle{plain}
+
+\maketitle
+\doublespacing
+\section{Introduction}
+This project intends to make a study of the feasibility of observing the quantum hall
+effect in a system where neutral bosons and an effective magnetic field are used.
+
+There are several inherent limitations in this approach, as the magnitude of the effective
+magnetic field is currently limited, and has a curvature that would destroy the symmetry
+of particles hopping on a lattice. Several approaches have been tried to replicate the effects
+of fermions in the bose system, and they will be discussed below. 
+
+\textbf{SETUP}
+It will be set up as follows:
+Background will contain some background on the Hall Effect, as well as the
+Hofstatder Butterfly. It should contain a lot of what I have learned on the
+subject (fairly in depth). 
+
+Research:
+This section should give a comprehensive overview of all that I have done this
+summer.
+Should cross reference with notebooks.
+\section{Background}
+
+\subsection{The Quantum Hall Effect}
+The regular Hall effect should be known to most undergraduates in physics, being a common
+expirement done in the undergrad labs.
+It is a phenomena that occurs when a current is run through a wire, with a magnetic field 
+applied perpendicularly to the direction of the current. Due to the $F = v \times B$ lorentz 
+felt by the current, a slight curving of the current will occur. This curving will cause a build
+up of charge on one side of the wire, which will cause a voltage to appear across the wires 
+width.
+%need to review the hall effect-discuss the sign change problem. Give a brief overview.
+
+The Integer Quantum Hall Effect (IQHE) is similar
+in nature to the regular Hall Effect.
+It is characterized by the plateaus that occur in the Hall Voltage for specific
+values of the magnetic field. 
+
+The cause of this is due to the nature of electrons in a magnetic field.
+When a magnetic field is present, the electrons will order themselves in Landua levels,
+and they will have a specific quantized energy value associated with the radius of the
+Landau level it is in.
+
+%More reading on the Quantum Hall Effect (make sure I am right.)
+
+\subsection{The Hofstadter Buttefly}
+The Hofstadter Butterfly is a plot of the energy spectrum of a 2D electron gas in a
+crystal, as a function of the magnetic flux being put through the crystal.
+%need to include a picture of the butterfly.
+This ties in with the Hall effect, because as shown by Laughlin~\cite{LAUGHLIN1981} %need to site
+, whenever the Fermi energy lies in an energy gap, the Hall conductance is quantized. The Butterfly
+has several large bands present- due to its fractal nature, and thus, makes a compelling study 
+for the Quantum Hall effect.
+Currently, there is some trouble in directly observing the Butterfly in 
+experiment. This is because of the tiny size of the lattice in the semiconductors used,
+an incredibly large magnetic field would be needed.
+However, the same equations that produce the Buttefly (The Harper Equations), are obeyed by a
+system of non-interacting bosons in a lattice with a magnetic field.
+This has ignited interest in whether a Butterfly could be created with these conditions
+~\cite{ZOLLER2003}, and, more to our purpose, whether the Integer Quantum Hall Effect could be
+seen in some of the larger gaps present in the structure of the Butterfly.
+
+Recent progress in creating effective magnetic fields for these neutral atoms has revived interest
+in this, and it is the purpose of this research further tie in these neutral bose systems with
+the quantum hall effect.
+% a discussion of the butterfly, how it is physically created, and mathematically solved- 
+%different approaches used.
+
+\section{Research}
+
+\subsection{Effective Magnetic Field}
+The first line of inquiry was made to see if these 'effective` magnetic fields were sophisticated enough
+to produce enough of a band gap to cause the Quantum Hall Effect. The Butterfly only has these 
+pronounced gap structures with higher values of the fraction flux plaquette (P/Q). However, recent research
+has shown that practical values of P/Q can be reached~\cite{SPIELMAN2009} %Cite the one paper that specifically mentions this
+%Sum up literature, highlight the important limitations- what flux/plaquette can we reach?
+%Are there ways to counteract the curvature
+Unfortunately, this method also produces a non-localized curvature in the potential. This could possibly
+disrupt the plane wave Bloch functions that diagonalize the Hamiltonian, and which are key to the structure of the
+Butterfly.
+
+However, the method seems promising enough that we can start exploring our idea
+in more depth.
+\subsection{Solving Harper's Equations}
+The second part of my research was understanding enough of quantum field theory to solve Harper's Equations.
+This include the following topics:
+
+\begin{itemize}
+\item Creation and Anhiliation Operators
+\item Commutator Relations
+\item The Structure of Fock Space
+\item The Aharamov-Bohm Effect
+\item Brillioun Zone
+\item Wannier States
+\item Bloch's Theorem
+\end{itemize}
+These all played some part in allowing me to understand and solve the Harper's Equations.
+The square lattice was the only system that was examined.
+\[
+\sum^Q_{j=1} \{ [2cos(k_x + 2 \pi j / \phi_0) -E ] \Psi_j +\exp^{-i k_y} \Psi_{j+1} + \exp^{ik_y} \Psi_{j-1} \}
+\]
+
+(NB:1, pg 54, 144(this was the better version))
+%Briefly discuss the fundamentals in understanding and solving Harper's Equations
+%Some field theory, hopping matrix, bloch states
+
+The first case looked at was extremely simple. Essentially, the Harper equations were solved with no
+additional assumptions, to show we could replicate Hofstader's original result.
+\begin{figure}[H]
+	\centerline{\rotatebox{-90}{\scalebox{.65}{\includegraphics{../Pics/butter_1.ps}}}}
+	\caption{ The Butterfly generated is a less resolution one, but the fractal structure
+	  clearly matches the original created by Hofstader
+          The code I used to generate this figure is in:
+          Documents/Report/Source/Code/Original/Basic, and it is called
+          hofbut.f90.
+        }
+	\label{Figure 1}
+\end{figure}
+I originally wrote code in matlab to produce these data files, but later ported it to
+Fortran 90.
+
+At this point we didn't check to see if the code could
+replicate the band structure expected when there was no magnetic field.
+Later on, using a more advanced version of the code, this was rectified.
+The resulting graphic was rendered in 3D, but I will try to include it.
+The data for the graphic are in:
+\\
+/home/green/Documents/Report/Source/Code/Exact/SingleParticle/Data
+
+At this point, I also briefly investigated what happened when P = 0, but Q != 1.
+The total magnetic field would still equal zero, but the effects of Q would still
+be felt in the system.
+Sure enough, it produced quite a weird spectrum (which is also in the folder above.).
+However, on further discussion, it was decided that this result is pathological.
+
+
+Once the results were compared to the Hofstatder's and shown to be in agreement,
+I went on to investigate the effect that interactions have on the system, using a Mean
+Field Theory at first.
+
+
+
+\subsection{Interaction Effects}
+%This was kind of abandoned- discuss why. 
+%talk about how you add interactions to the mean field theory
+%why it is tricky, what it means.
+Instead of solving the system exactly, we used a Mean Field Theory Approach (MFT).
+This approach is based off of the approximation that all of the interactions
+that the particles undergo in the system can be averaged out. Then we only
+need to consider this average effect on a single particle to obtain
+the full dynamics of the system.
+
+This was done using the bose hubbard model, 
+\[
+-t \sum_{\langle p, q \rangle} b_p^\dagger b_p + \frac{U}{2} \sum_p \hat{n}_p
+(\hat{n_p} - 1) +\mu \sum_p n_p
+\].
+See notes for a complete deviation. \textit{NB:1, pg 87-90}
+
+The resulting formula that was derived, using the Mean Field Theory approximation:
+\begin{equation} 
+H = -t \sum_{\langle p, q \rangle} b_p^\dagger b_p e^{i \Theta_{p,q}} +
+\frac{U}{2} [ (2n_p -1)\hat{n}_p - \bar{n}^2] +\sum_p \mu n_p
+\end{equation}
+
+Then the result was taken into k space,
+\begin{equation} \label{BHMeq}
+H = \int_k  H_0 +\frac{U}{2} (2\bar{n}-1)b_k^\dagger b_k -\frac{U}{2} n N +
+\mu N
+\end{equation}.
+
+This was the result used to generate Figure \ref{BHMfig}.
+
+
+\begin{figure}[H]
+	\centerline{\rotatebox{-90}{\scalebox{.45}{\includegraphics{../Pics/N100U0_0002.ps}}}}
+	\caption{ The number of particles is 100, and the interactions energy is .0002, and as
+		seen, all that occurs is the shift. Though dramatic in terms of the energy scale,
+		ie. an interactions energy of 0.0002 caused a shift of 100, the internal 
+		structure is not altered at all. Similar results are found, with a varying 
+		energy shift for different combinations of N, U. This figure was
+		produced using code in /home/green/Documents/Report/Source/Code/Original/Interactions}
+	\label{BHMfig}
+\end{figure}
+%FIGURE commented out so it will print
+
+%path to file pjl/NSERC3/Fixed_Q/Interactions
+
+Using the Mean Field Theory approximation to the Bose Hubbard Model shows a
+robust gap, even with interactions.
+
+This is not so unexpected though, as seen in~\eqref{BHMeq}, the MFT just gives
+an offset on the diagonal terms of the Hamiltonian - resulting in the shift
+seen in Figure \ref{BHMfig}.
+
+The result is encouraging, as if the gap remains robust in the presence of
+interactions, Laughlin's argument should be applicable.
+\subsection{Temperature Effects}
+This whole project is predicated on the assumption that we can obtain a system
+that is similar to a 2D ferimon gas in a crystal lattice using neutral bosons
+in an optical lattice. However, bosons do not behave like fermions.
+One boson and one fermion appear indistinguishable, as their identifying
+statistics only come to bare when they interact with their fellows. This is
+why our boson butterfly was exactly the same as the fermion butterfly.
+In reality, we would not be inserting one boson into the system, there would
+be quite a few.
+
+In an attempt to mimic the behavior of the repulsive interactions of the fermions
+we turned on the temperature. The goal being to try to obtain a configuration
+that mimics that of a Fermion at zero temperature. This would allow the
+standard methods for calculating that Hall Conductance to be used.~\cite{STREDA1982}~\cite{THOULESS1982}~\cite{2STREDA1982}
+
+First, to get a feeling for how temperature effects the system, I created a
+set of animated GIF showing how the energy levels become occupied as
+temperature increases. They can be found here:
+\\\begin{verbatim}/home/green/Documents/Report/Source/Code/Analysis/Movie/Butterfly_Full_Mu-100\end{verbatim}
+Several promising features can be seen in the movies- such as the bottom
+energy level filling up nicely, while the second energy level is often empty.
+
+A closer look was taken for a flux of 1/10, to see specifically what was happening.
+By observing Figure \ref{tempdist}, we can see that the
+bottom band is almost completely filled, while the second band has negligible
+occupation.
+Almost exactly like a fermionic system at zero temperature with the Fermi
+energy in the gap!
+
+In fact, it seems to be temperature which fulfills this role. If we `normalize'
+the energy to make it directly comparable to the temperature (cannot have $t <
+0)$), then our bottom energy would become 0, and our second energy would
+become $-2.35+3.42 = 1.07$;this would put the middle of the gap at around
+$.535$. Thus, if we had an system equivalent to a Fermi system, we could
+predict that at $T = .535$, bottom band would be completely occupied, while the
+top band wouldn't have any occupation at all.
+
+\begin{figure}[H]
+	\centerline{\rotatebox{0}{\scalebox{.45}{\includegraphics{../Pics/E1_E2_T2_N10000.eps}}}}
+	\caption{The first two energy levels are shown in contrast. More graphs can
+	be provided, but the same basic analysis is given.
+	Note interesting things are bose clumping found- where the higher the
+	number of particles, the more loath they were to leave the first energy level.
+	And the split energy levels. The first energy band seems to evolve towards
+	having the same occupation probability, making them appear indistinguishable
+	in a sense. Would this be the same as having one huge bose condensate? Note the
+	second band is still negligibly filled at this point. Flux = 1/10.
+	This figure was generated using matplotlib with ipython. I used data files
+	generated by the code found here:
+        \\ /home/green/Documents/Report/Source/Code/Analysis/BoseStat/Python
+        \\Note that at the predicted temperature of T=.535, we have the
+        state we are looking for
+	}
+	\label{tempdist}
+\end{figure} %PATHTOFILE: /anon-dhcp12.Documents/Temp_Affects/Less_K/Prob_Graphs/Temp_2_Flux_.1_Num_10000
+%path to file pjl/NSERC3/Fixed_Q/Interactions
+
+
+Promising as this approach is, there are some fairly serious issues with it.
+This was done using the grand canonical boson distribution (as the
+bose distribution is derived within the grand canonical framework), and there
+may be some suspicions in the manner which we use the energy levels.
+
+The energy levels used are non-interacting, single particle.
+When using the grand canonical ensemble, we are injecting a possibility of an 
+infinite amount of particles into our system. To be sure of our results, we will need
+to derive the energy landscape of an interacting, multi-particle system, and
+apply the temperature analysis to THAT spectrum.
+
+%Discuss how .gif shows the energy levels being filled as a function of temperature.
+%Include the recent figures to show that at low temperatures we have the first band almost 
+%completely filled, but the second band is not not filled up at all
+%Discuss how N factors into this quite a bit- bose-enhancement (like to clump)
+%maybe explore fractured bose condensate that D.F. discussed.
+\section{Temperature Effects Exactly}
+The next challenge was to try to exactly solve the system for very
+small numbers of particles, ie. 2,3,4. 
+This required new code to be written, as the system could
+no longer be modeled as the energy levels of one particle.
+
+In the absence of interactions, the problem is slightly more
+tractable, as it is just the tensor product of the energy
+levels of the single particle. The bosons can't see each other,
+so they don't perturb the system at all, but the energy you
+measure in the system is changed- you need to add up the energy
+each boson contributes to the system and account for all the combinations.
+\begin{figure}[H]
+	\centerline{\scalebox{.45}{\includegraphics{../Pics/energsmear_N1_3.eps}}}
+	\caption{ Showing how the energy spectrum changes as more particles
+	are allowed into the system. N=1,2,3 were shown to get a sense of the trend.    }
+	\label{NEnergyfig}
+\end{figure}
+
+The code produced is contained in the directory:
+\\/home/green/Documents/Report/Source/Code/Analysis/GrandCanonical/NoInteractions
+
+
+The code written accurately reproduces the spectrum for N=1, and
+as predicted, gave us the same result as the tensor product, see calib.py in
+the same folder.
+(This was tested with a python script that would take the
+tensor product and we compared this spectrum to the one
+produced explicitly by the Hamiltonian.
+
+%should show a graph of each, side by side maybe
+The next step is to apply temperature, and see if the promising
+results predicted by the one particle spectrum hold up.
+There is some fudging involved, as the bose distribution requires
+a possible infinite amount of particles to be added to the system
+(as it is the result of a geometric series resulting from the grand
+partition function extended to include an infinite number of particles).
+
+There was also some difficulties in using the grand partition function itself,
+as the energy levels could possibly change as a function of how many particles
+are in the system (in the interacting case at least).
+
+It was thought that as long as the grand partition function
+was truncated at a sufficiently high enough particle number, with respect
+to the average particle number selected for by the user, the series would still be accurate enough to predict a gap, or at least give evidence of one.
+A python code was written that would calculate values from the grand partition function.
+For no interactions, the average energy of the system is simple to realize.
+\begin{figure}[H]
+	\centerline{\scalebox{.44}{\includegraphics{../Pics/N1_2_3_P1_Q8_Nr_1_7_T1.eps}}}
+	\caption{ Without interactions, increasing the N just increases the
+	number of possible combinations of energy, so we would expect no
+	change to the energy spectrum. Note the nice plataea that qualitatively
+	shows a band gap is present.}
+	\label{NEnergyavefig}
+\end{figure}
+
+
+%GRAPHS TO SHOW: REPRODUCE N=1
+%				 Energy level (showing how the gap seems smeared
+%				 Average K value?
+%                The Average Energy of the system (derivative appch)
+%the ave. energy graph is the method we use to see the first gap.
+%note how, even here, the gap is getting smoother.
+\section{Gap Test}
+The final test is to see if the energy gap seen in the original
+butterfly stays robust even after temperature and interactions
+are turned on. A system was needed where we could gauge the
+size of the band gap. 
+\subsection{Toy Model}
+The following toy model was proposed:
+Two energy levels,$\epsilon_0$, $\epsilon_0 + \Delta$. They were then modeled
+using the canonical ensemble.
+\begin{equation} \label{toymodel1}
+Z = \exp^{- \epsilon_0 / t} + \exp ^{ - (\epsilon_0 + \Delta) / t}
+\end{equation}
+If the system has a well defined band gap, then the average energy 
+should go through some noticeable plateaus. This would be because the
+particles would not have enough thermal energy to overcome the gap $\Delta$,
+and so, until that threshold temperature was reached, the average energy
+should not increase.
+
+However, as we are working in the grand canonical ensemble, another toy 
+model was developed in the grand canonical framework.
+\textit{NB:2, pg 86-89, 95-99} 
+The average energy of our second toy model,
+\begin{equation}\label{toyeq}
+E_{\mathrm{ave}} = \left(  \left(  \left( {e^{{\frac {\epsilon-\mu}{t}}}}-1 \right) ^{-1
+}+ \left( {e^{{\frac {\epsilon+\delta-\mu}{t}}}}-1 \right) ^{-1}
+ \right) \epsilon+\delta \left( {e^{{\frac {\epsilon+\delta-\mu}{t}}}}
+ -1 \right) ^{-1} \right)  \left(  \left( {e^{{\frac {\epsilon-\mu}{t}}
+ }}-1 \right) ^{-1}+ \left( {e^{{\frac {\epsilon+\delta-\mu}{t}}}}-1
+  \right) ^{-1} \right) ^{-1}
+  \end{equation}
+However, assuming that the temperature is low, this can be approximated,
+\begin{equation}
+E_{mathrm{ave}} \approx \epsilon + \frac{\Delta}{(e^{\Delta/t}+1}
+\end{equation}
+
+\begin{figure}[H]
+	\centerline{\scalebox{.55}{\includegraphics{../Pics/energyfitplot1.eps}}}
+	\caption{ The various approximations are shown for the toy model.
+          The grand canonical approximation refers to Eq. \eqref{toyeq}, while
+          the canonical approximation refers to Eq. \eqref{toymodel1}
+        }
+	\label{energycomfig}
+\end{figure}
+
+Now, using Eq. \eqref{toyeq}, we can apply it to a very simple case to
+see if we can read off the gap, $\Delta$, by trying to fit that model to
+the data.
+Xmgrace's non-linear curve fitting macro was used.
+
+
+The way we test for gap robustness is by solving for the average energy
+of our truncated grand canonical system as a function of temperature.
+If we observe any characteristic plateaus in the data, we can attempt to
+fit a curve according to Eq. \eqref{toyeq}. 
+If we get a good fit for low temperatures, then we can read the
+gap right off of the fitted parameters.
+This method will work best when the energy bands are small, allowing
+them to be closely approximated by the point energies $\epsilon$ and 
+$\epsilon+\Delta$. 
+\subsubsection{Testing the Gap Test (No Interactions)}
+We have confirmed that for low temperatures and negative epsilons, that the
+approximation is good, and fits closely with the toy model. Now, we will
+apply it to a case where we know what the gap is, to see if we can recover
+$\Delta$.
+
+This allows us to characterize band gaps, even in the presence of interactions,
+where the systems energy cannot simply be modeled as the tensor product
+of the single particle energy spectrum
+\begin{figure}[H]
+	\centerline{\scalebox{.35}{\includegraphics{../Pics/energyfittestN1_P1_Q8_t0.6.eps}}}
+	\caption{ The toy model was tested against  numerical data created to 
+          model the average energy of a grand
+          canonical system truncated at 7 particles. It was found upon
+          analysis that adding the second parameter, A1, into Eq. \ref{toyeq}
+          in place of the 1 in the $(exp(\Delta/t)+1) \rightarrow
+          (exp(\Delta/t+A1))$ term increased the approximations accuracy.
+          See Table \ref{Nenergytble} for other gap values calculated.
+          It was plotted using data created by code found in:
+          Documents/Report/Source/Code/Exact/NoInteractions
+        }
+          
+           
+	\label{toytestN1}
+\end{figure}
+
+\begin{table}[H]
+\centering
+ \begin{tabular}{c c c} 
+   N & Gap & A1 \\ \hline \hline
+   1 & 1.28728 & -3.29214 \\
+   2 & 1.21323 & -3.15381 \\
+   3 & 1.17691 & -2.71397 \\ \hline \hline
+   Actual & 1.278 & - \\ \hline
+ \end{tabular}
+\caption{Even though it looks like there is a trend towards lower precision in
+  the gap calculated, there may not be. The N=2, and N=3 values were done using
+a $t=0..1$ range, while the N=1 case was done with $t=0..0.6$.
+This data was produced by code found in: \\
+ Documents/Report/Source/Code/Exact/NoInteractions, and the data was found in
+directory: \\
+Documents/Exact/TempEffects/GrandCan} \label{Nenergytble}
+\end{table}
+
+
+
+Table \ref{Nenergytble} is only meant to show that this method gives a
+qualitative measure of the robustness of, the gap- not that it can be used to
+precisely give a value for the gap.
+
+%plots needed:
+%plot showing that approximated works for toy model
+%plot showing it gives the right info for known case, N=1
+%plot showing the gap robustness is preserved for interactions, N=2 
+\subsubsection{Applying the Gap Test (Interactions Turned On)}
+We then took our toy model and applied it to numerical data derived with
+interactions taken into account.
+The code used to generate the figures in this section can be found here:
+\\
+/home/green/Documents/Report/Source/Code/Exact/Interactions
+
+\bigskip
+\begin{figure}[H]
+	\centerline{\scalebox{.35}{\includegraphics{../Pics/gaptest_N1_Nr1_7_T0.8_P1_Q8_G0.2.eps}}}
+	\caption{ The toy model fits quite well to this data set. The gap
+          can be read directly off the graph as $\Delta = 1.01976$, so
+          we can suppose that the gap remains robust, at least with one
+          particle. This was expected, as with one particle, interactions
+          shouldn't really become an issue
+        }
+        \label{fig:toyapplyN1}
+          
+\end{figure}
+
+\begin{figure}[H]
+	\centerline{\scalebox{.35}{\includegraphics{../Pics/gaptest_N2_Nr1_7_t2.2_2.58_G0.2_P1_Q8.eps}}}
+	\caption{ The toy model does not fit well at all, and gives patently
+          bad values for the line fit. The BEC temperature calculated
+          is too high, and so we lose the valuable low temperature region
+          of the graph that is used to calculate the gap.
+        }
+        \label{fig:toyapplyN2}
+\end{figure}
+
+
+There are several problems with this approach. When the interactions
+are turned on, it can make it difficult to access the low temperature
+area of the average energy, as in Figure \ref{fig:toyapplyN2}
+The reason is discussed below:
+\\
+The interactions effects grow as a function of N. They shift the energy spectrum
+up, as seen in Figure \ref{BHMfig}. This means, that at low temperatures,
+the system will prefer to stay in a low particle number configuration- as
+this will minimize the energy. If the average number of particles wanted is 
+higher than 1, the system must compensate somehow. The chemical potential
+cannot increase anymore(as it is fixed at the smallest energy level), so
+the only thing left to give is the temperature.
+The BEC temperature becomes noticeably quite large when N is increased.
+%maybe show table of BEC temp as a function of N
+%need to gather more data
+As the BEC temperature mandates the lowest temperature we can get to and
+still have our particle number conserved, a high BEC temp means we
+are pushed out of the desirable low temperature limit that makes our
+approximation work so well.
+At higher temperatures, the particles can sample more and more of our system,
+and this will mean that our simplified toy model with only two energy levels
+will no longer be a good fit.
+N = 2 seems to be as high up as we can get and still get access to reasonable
+temperatures. A promising result, but hardly conclusive.
+
+\section{Kubo}
+\textbf{NEED TO FINISH}
+All the evidence gathered so far, while not conclusive, seems to suggest
+that the large gaps present in the Butterfly remain large, even with
+interactions and temperature turned on.
+In the methods usually used to calculate the Hall Voltage, the Fermi energy
+only comes into play to ensure that all the states below it are completely filled.
+As the temperature neatly takes care of this, the formulas developed by
+St\u{r}eda and Thouless should be directly applicable to our case.
+If there is enough time, an effort will be made to confirm the prediction
+of an Integer Hall effect in the system of neutral bosons under investigation.
+\section{Conclusion}
+We have found several promising hints that the temperature of the
+neutral boson system acts equivalently to the Fermi energy of a Fermionic
+system.
+
+If true, then following Laughlin's argument, we predict that a Hall
+Conductance
+would be observed if a potential is applied to the system.
+This suggests that if we apply the Kubo formula, we will be able to
+predict the Hall conductance in our system.
+
+If we have enough time, we will apply the Kubo argument, a la St\u{r}eda,
+and perhaps even test out Thouless's method of calculating the Hall
+conductance.
+
+
+%The promising research into the Temperature Effects merits a more in depth investigation.
+%Proposal for looking at solving the hamiltonian exactly
+%Problems might be that we want high N to get the really nice systems, and our exact calculations
+%will be limited to small N systems.
+\bibliography{Master}
+\end{document}
+
+
